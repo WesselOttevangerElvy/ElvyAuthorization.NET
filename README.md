@@ -15,7 +15,7 @@ De Elvy Authorization SDK is een .NET library die je kunt gebruiken om de Elvy t
 
 
  - ### Stap 3: Voeg het volgende toe aan je appsettings.json:
-   `"ElvyRefreshToken": "Vervang dit met je eigen refresh token`
+   `"ElvyRefreshToken": "Vervang dit met je eigen refresh token"`
 
  - ### Stap 4: Initialiseer met dependency injection de TokenStorage in je startup.cs.
     - Dit is mogelijk door de volgende lijn aan je `ConfigureServices` methode toe te voegen:
