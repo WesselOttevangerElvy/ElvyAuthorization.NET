@@ -12,6 +12,7 @@ De Elvy Authorization SDK is een .NET library die je kunt gebruiken om de Elvy t
 
 
  - ### Stap 2: importeer het project in je .NET solution.
+   - Voeg ook een referentie naar het project toe in je eigen project.
 
 
  - ### Stap 3: Voeg het volgende toe aan je appsettings.json:
