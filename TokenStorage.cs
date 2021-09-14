@@ -28,6 +28,11 @@ namespace ElvyAuthorizationSDK
         {
             return _refreshToken;
         }
+
+        public void SetAccessToken(string accessToken)
+        {
+            _accessToken = accessToken;
+        }
        
         public ElvyAccessToken GetAccessToken()
         {
