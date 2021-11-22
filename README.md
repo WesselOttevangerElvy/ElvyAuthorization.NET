@@ -20,7 +20,7 @@ De Elvy Authorization SDK is een .NET library die je kunt gebruiken om de Elvy t
 
  - ### Stap 4: Initialiseer met dependency injection de TokenStorage in je startup.cs.
     - Dit is mogelijk door de volgende lijn aan je `ConfigureServices` methode toe te voegen:
-      `services.AddSingleton(x => new TokenStorage("https://localhost:44386/v1/Token/Refresh", Configuration["ElvyRefreshToken"]));`
+      `services.AddSingleton(x => new TokenStorage("https://licenser.elvy.nl/v1/Token/Refresh", Configuration["ElvyRefreshToken"]));`
 
  - ### Stap 5: Gebruik de geinjecteerde dependency in je controller.
    - Voeg het volgende toe aan de constructor van je controller:
