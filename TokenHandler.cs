@@ -3,40 +3,41 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using Elvy.Result;
-using Elvy.Result.Enums;
 
 namespace ElvyAuthorizationSDK
 {
     public static class TokenHandler
     {
         private static readonly JwtSecurityTokenHandler Jsth = new();
-        private static Result<List<Claim>> Decode(string token)
+        private static List<Claim> Decode(string token, out string message)
         {
+            message = default;
             try
             {
                 JwtSecurityToken jwt = Jsth.ReadJwtToken(token);
-                return new Result<List<Claim>>(jwt.Claims.ToList());
+                return jwt.Claims.ToList();
             }
             catch (Exception ex) when (ex is ArgumentNullException or ArgumentException)
             {
-                return new Result<List<Claim>>(ResultCode.InvalidToken, ex);
+                message = "token invalid";
+                return null;
             }
             catch (Exception ex)
             {
-                return new Result<List<Claim>>(ResultCode.UnknownError, ex);
+                message = "unknown error";
+                return null;
             }
         }
 
-        public static Result TokenNotExpired(string token, out DateTime expiration)
+        public static bool TokenNotExpired(string token, out DateTime expiration)
         {
             expiration = default;
-            Result<List<Claim>> claimsResult = Decode(token);
-            if (!claimsResult.Succes()) return Result.CreateFrom(claimsResult);
+            List<Claim> claims = Decode(token, out string message);
+            if (claims == null) return false;
 
-            Claim expirationClaim = claimsResult.Value.First(x => x.Type == "exp");
+            Claim expirationClaim = claims.First(x => x.Type == "exp");
             expiration = DateTime.UnixEpoch.AddMilliseconds(Convert.ToUInt32(expirationClaim.Value));
-            return expiration < DateTime.Now ? new Result(ResultCode.Expired) : new Result(ResultCode.OK);
+            return expiration >= DateTime.Now;
         }
     }
 }
